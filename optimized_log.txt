@@ -1,0 +1,83 @@
+2025-06-26 18:47:34,400 - INFO - Starting data type optimization.
+2025-06-26 18:47:34,402 - INFO - Column 'small_cat': Converted to category. Unique values: 49.
+2025-06-26 18:47:34,403 - INFO - Column 'small_cat': Memory usage changed from 5710 to 4038 bytes.
+2025-06-26 18:47:34,404 - INFO - Column 'numeric': Downcast to int32 or smaller (e.g., int16, int8).
+2025-06-26 18:47:34,404 - INFO - Column 'numeric': Memory usage changed from 932 to 232 bytes.
+2025-06-26 18:47:34,404 - INFO - Data type optimization finished.
+2025-06-26 18:48:36,791 - INFO - Starting data type optimization.
+2025-06-26 18:48:36,794 - INFO - Column 'small_category': Converted to category. Unique values: 49.
+2025-06-26 18:48:36,795 - INFO - Column 'small_category': Memory usage changed from 5710 to 4038 bytes.
+2025-06-26 18:48:36,796 - INFO - Column 'numeric': Downcast to int32 or smaller (e.g., int16, int8).
+2025-06-26 18:48:36,796 - INFO - Column 'numeric': Memory usage changed from 932 to 232 bytes.
+2025-06-26 18:48:36,796 - INFO - Data type optimization finished.
+2025-06-26 19:08:14,154 - INFO - Starting data type optimization.
+2025-06-26 19:08:14,157 - INFO - Column 'small_category': Converted to category. Unique values: 49.
+2025-06-26 19:08:14,157 - INFO - Column 'small_category': Memory usage changed from 5710 to 4038 bytes.
+2025-06-26 19:08:14,159 - INFO - Column 'numeric': Downcast to int32 or smaller (e.g., int16, int8).
+2025-06-26 19:08:14,159 - INFO - Column 'numeric': Memory usage changed from 932 to 232 bytes.
+2025-06-26 19:08:14,159 - INFO - Data type optimization finished.
+2025-06-26 19:09:08,376 - INFO - Starting data type optimization.
+2025-06-26 19:09:08,378 - INFO - Column 'small_category': Converted to category. Unique values: 49.
+2025-06-26 19:09:08,379 - INFO - Column 'small_category': Memory usage changed from 5710 to 4038 bytes.
+2025-06-26 19:09:08,380 - INFO - Column 'numeric': Downcast to int32 or smaller (e.g., int16, int8).
+2025-06-26 19:09:08,380 - INFO - Column 'numeric': Memory usage changed from 932 to 232 bytes.
+2025-06-26 19:09:08,380 - INFO - Data type optimization finished.
+2025-06-26 19:09:08,383 - INFO - Starting data type optimization.
+2025-06-26 19:09:08,384 - INFO - Column 'float_col': Downcast to float32 (or smaller if possible via to_numeric).
+2025-06-26 19:09:08,384 - INFO - Column 'float_col': Memory usage changed from 172 to 152 bytes.
+2025-06-26 19:09:08,384 - INFO - Column 'int_col': Downcast to int32 or smaller (e.g., int16, int8).
+2025-06-26 19:09:08,385 - INFO - Column 'created_date': Converted to category. Unique values: 5.
+2025-06-26 19:09:08,386 - INFO - Column 'created_date': Memory usage changed from 427 to 604 bytes.
+2025-06-26 19:09:08,386 - INFO - Column 'bad_timestamp': Converted to category. Unique values: 5.
+2025-06-26 19:09:08,387 - INFO - Column 'bad_timestamp': Memory usage changed from 414 to 591 bytes.
+2025-06-26 19:09:08,387 - INFO - Data type optimization finished.
+2025-06-26 19:17:24,562 - INFO - Starting data type optimization.
+2025-06-26 19:17:24,565 - INFO - Column 'small_category': Converted to category. Unique values: 49.
+2025-06-26 19:17:24,565 - INFO - Column 'small_category': Memory usage changed from 5710 to 4038 bytes.
+2025-06-26 19:17:24,566 - INFO - Column 'numeric': Downcast to int32 or smaller (e.g., int16, int8).
+2025-06-26 19:17:24,567 - INFO - Column 'numeric': Memory usage changed from 932 to 232 bytes.
+2025-06-26 19:17:24,567 - INFO - Data type optimization finished.
+2025-06-26 19:17:24,569 - INFO - Starting data type optimization.
+2025-06-26 19:17:24,570 - INFO - Column 'float_col': Downcast to float32 (or smaller if possible via to_numeric).
+2025-06-26 19:17:24,570 - INFO - Column 'float_col': Memory usage changed from 172 to 152 bytes.
+2025-06-26 19:17:24,571 - INFO - Column 'int_col': Downcast to int32 or smaller (e.g., int16, int8).
+2025-06-26 19:17:24,572 - INFO - Column 'created_date': Converted to category. Unique values: 5.
+2025-06-26 19:17:24,572 - INFO - Column 'created_date': Memory usage changed from 427 to 604 bytes.
+2025-06-26 19:17:24,573 - INFO - Column 'bad_timestamp': Converted to category. Unique values: 5.
+2025-06-26 19:17:24,573 - INFO - Column 'bad_timestamp': Memory usage changed from 414 to 591 bytes.
+2025-06-26 19:17:24,573 - INFO - Data type optimization finished.
+2025-06-26 19:17:45,396 - INFO - Starting data type optimization.
+2025-06-26 19:17:45,399 - INFO - Column 'small_category': Converted to category. Unique values: 49.
+2025-06-26 19:17:45,400 - INFO - Column 'small_category': Memory usage changed from 5710 to 4038 bytes.
+2025-06-26 19:17:45,401 - INFO - Column 'numeric': Downcast to int32 or smaller (e.g., int16, int8).
+2025-06-26 19:17:45,401 - INFO - Column 'numeric': Memory usage changed from 932 to 232 bytes.
+2025-06-26 19:17:45,402 - INFO - Data type optimization finished.
+2025-06-26 19:17:45,404 - INFO - Starting data type optimization.
+2025-06-26 19:17:45,405 - INFO - Column 'float_col': Downcast to float32 (or smaller if possible via to_numeric).
+2025-06-26 19:17:45,405 - INFO - Column 'float_col': Memory usage changed from 172 to 152 bytes.
+2025-06-26 19:17:45,405 - INFO - Column 'int_col': Downcast to int32 or smaller (e.g., int16, int8).
+2025-06-26 19:17:45,407 - INFO - Column 'created_date': Converted to category. Unique values: 5.
+2025-06-26 19:17:45,407 - INFO - Column 'created_date': Memory usage changed from 427 to 604 bytes.
+2025-06-26 19:17:45,408 - INFO - Column 'bad_timestamp': Converted to category. Unique values: 5.
+2025-06-26 19:17:45,408 - INFO - Column 'bad_timestamp': Memory usage changed from 414 to 591 bytes.
+2025-06-26 19:17:45,408 - INFO - Data type optimization finished.
+2025-06-26 20:09:11,184 - INFO - Starting data type optimization.
+2025-06-26 20:09:11,187 - INFO - Column 'small_category': Converted to category. Unique values: 49.
+2025-06-26 20:09:11,188 - INFO - Column 'small_category': Memory usage changed from 5710 to 4038 bytes.
+2025-06-26 20:09:11,189 - INFO - Column 'numeric': Downcast to int32 or smaller (e.g., int16, int8).
+2025-06-26 20:09:11,189 - INFO - Column 'numeric': Memory usage changed from 932 to 232 bytes.
+2025-06-26 20:09:11,189 - INFO - Data type optimization finished.
+2025-06-26 20:09:11,192 - INFO - Starting data type optimization.
+2025-06-26 20:09:11,193 - INFO - Column 'float_col': Downcast to float32 (or smaller if possible via to_numeric).
+2025-06-26 20:09:11,193 - INFO - Column 'float_col': Memory usage changed from 172 to 152 bytes.
+2025-06-26 20:09:11,193 - INFO - Column 'int_col': Downcast to int32 or smaller (e.g., int16, int8).
+2025-06-26 20:09:11,195 - INFO - Column 'created_date': Converted to category. Unique values: 5.
+2025-06-26 20:09:11,195 - INFO - Column 'created_date': Memory usage changed from 427 to 604 bytes.
+2025-06-26 20:09:11,196 - INFO - Column 'bad_timestamp': Converted to category. Unique values: 5.
+2025-06-26 20:09:11,196 - INFO - Column 'bad_timestamp': Memory usage changed from 414 to 591 bytes.
+2025-06-26 20:09:11,196 - INFO - Data type optimization finished.
+2025-06-26 20:09:11,234 - INFO - Starting CSV optimization for dummy_input.csv...
+2025-06-26 20:09:11,235 - INFO - Successfully read CSV from dummy_input.csv.
+2025-06-26 20:09:11,237 - INFO - Original DataFrame memory usage: 0.00 MB
+2025-06-26 20:09:11,238 - INFO - Optimized DataFrame memory usage: 0.00 MB
+2025-06-26 20:09:11,238 - INFO - Successfully saved optimized CSV to dummy_output.csv.
