@@ -2,7 +2,8 @@ import pandas as pd
 from sklearn.decomposition import PCA
 import os
 
-def apply_pca( df, n_components = None):
+
+def apply_pca(df, n_components=None):
     """
     Applies Principal Component Analysis (PCA) to the given DataFrame.
 
@@ -11,7 +12,7 @@ def apply_pca( df, n_components = None):
                 If None, all components are retained.
 
     Returns:
-        tuple[pd.dataFrame, dict[str, Any]]: 
+        tuple[pd.dataFrame, dict[str, Any]]:
             - Transformed dataFrame with principal components
             - Metadata containing explained variance and column mappings
     """
@@ -20,7 +21,7 @@ def apply_pca( df, n_components = None):
     pca = PCA(n_components=n_components)
     components = pca.fit_transform(numeric_df)
 
-    col_names = [f"PC{i+1}" for i in range(components.shape[1])]
+    col_names = [f"PC{i + 1}" for i in range(components.shape[1])]
     pca_df = pd.DataFrame(components, columns=col_names, index=df.index)
 
     metadata = {

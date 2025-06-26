@@ -3,6 +3,7 @@ import numpy as np
 import os
 import json
 
+
 def load_and_clean_data(file_path, encoding):
     """
     Loads a csv file into a pandas DataFrame, removes duplicate rows, fills missing values in numeric columns with the mean, fills missing values in categorical columns with the mode, and strips whitespace from string columns.
@@ -17,12 +18,12 @@ def load_and_clean_data(file_path, encoding):
     except Exception as e:
         raise ValueError(f"could not load file: {e}")
 
-    # Remove duplicate rows 
+    # Remove duplicate rows
     df.drop_duplicates(inplace=True)
 
     # Fill missing values in numeric columns with (mean)
     for col in df.select_dtypes(include='number'):
-        df[col] = df[col].fillna(df[col].mean())  
+        df[col] = df[col].fillna(df[col].mean())
 
     # Fill missing values in categorical columns (mode)
     for col in df.select_dtypes(include='object'):
@@ -34,6 +35,7 @@ def load_and_clean_data(file_path, encoding):
         df[col] = df[col].str.strip()
 
     return df
+
 
 def split_numerical_categorical(df):
     """
@@ -50,10 +52,12 @@ def split_numerical_categorical(df):
     numerical_cols = []
     encoded_categorical_cols = []
 
-    # Heuristic: If the column has 10 or fewer unique integer values, treat as categorical
+    # Heuristic: If the column has 10 or fewer unique integer values, treat as
+    # categorical
     for col in numeric_cols:
-        unique_vals = df[col].dropna().unique()  
-        if len(unique_vals) <= 10 and all(float(val).is_integer() for val in unique_vals):
+        unique_vals = df[col].dropna().unique()
+        if len(unique_vals) <= 10 and all(float(val).is_integer()
+                                          for val in unique_vals):
             encoded_categorical_cols.append(col)
         else:
             numerical_cols.append(col)
@@ -61,11 +65,14 @@ def split_numerical_categorical(df):
     df_numerical = df[numerical_cols]
     df_categorical = df.select_dtypes(include='object')
     # Add detected encoded categorical columns to the categorical DataFrame
-    df_categorical = pd.concat([df_categorical, df[encoded_categorical_cols]], axis=1)
+    df_categorical = pd.concat(
+        [df_categorical, df[encoded_categorical_cols]], axis=1)
 
     return df_numerical, df_categorical
 
-# only to be used on numerical data 
+# only to be used on numerical data
+
+
 def numerical_stats(num_df):
     """
     Calculate basic statistics for each numerical column in the DataFrame.
@@ -87,7 +94,9 @@ def numerical_stats(num_df):
         }
     return stats
 
-# returns most frequent values 
+# returns most frequent values
+
+
 def most_frequent_values(series):
     """
     Returns a list of the most frequent value(s) in a pandas Series.
@@ -117,6 +126,8 @@ def categorical_stats(cat_df):
     return stats
 
 # calls numerical_stats and categorical_stats func
+
+
 def full_stats(numerical_df, categorical_df):
     """
     Generates summary statistics for numerical and categorical DataFrames.
@@ -130,6 +141,7 @@ def full_stats(numerical_df, categorical_df):
         "Numerical Columns": numerical_stats(numerical_df),
         "Categorical Columns": categorical_stats(categorical_df)
     }
+
 
 def convert_to_builtin_types(obj):
     """
@@ -161,8 +173,13 @@ def convert_to_builtin_types(obj):
         return {k: convert_to_builtin_types(v) for k, v in obj.items()}
     else:
         return obj
-    
-def summarize_csv(file_or_path, output_dir="./notebooks/output-files/statistics_summary", encoding="utf-8", export_json=False):
+
+
+def summarize_csv(
+        file_or_path,
+        output_dir="./notebooks/output-files/statistics_summary",
+        encoding="utf-8",
+        export_json=False):
     """
     Summarizes a CSV file by computing statistics for numerical and categorical columns.
     Args:
@@ -181,21 +198,23 @@ def summarize_csv(file_or_path, output_dir="./notebooks/output-files/statistics_
     else:  # if a file object from an upload
         filename = file_or_path.filename  # extract the original filename
         df = load_and_clean_data(file_or_path, encoding=encoding)
-    
+
     df_numerical, df_categorical = split_numerical_categorical(df)
     stats = convert_to_builtin_types(full_stats(df_numerical, df_categorical))
 
     if export_json:
         os.makedirs(output_dir, exist_ok=True)
         base_name = os.path.splitext(filename)[0]
-        json_export_path = os.path.join(output_dir, f"{base_name}_stats_summary.json")
+        json_export_path = os.path.join(
+            output_dir, f"{base_name}_stats_summary.json")
         with open(json_export_path, "w") as f:
             json.dump(stats, f, indent=4)
         return stats, json_export_path
-    
+
     return stats
 
 
 if __name__ == "__main__":
-    stats, out_path = summarize_csv("./notebooks/sample_csv/titanic.csv", export_json=True)
+    stats, out_path = summarize_csv(
+        "./notebooks/sample_csv/titanic.csv", export_json=True)
     print(f"Exported summary stats to: {out_path}")

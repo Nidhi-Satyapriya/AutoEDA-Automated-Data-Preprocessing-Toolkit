@@ -51,7 +51,8 @@ def run_outlier_pipeline(scaled_csv_path, output_dir):
         raise ValueError(f"Failed to load input CSV: {e}")
 
     # Call the main orchestration function from outliers.py
-    # Assumes outliers.process_outliers returns a dict with DataFrames and stats
+    # Assumes outliers.process_outliers returns a dict with DataFrames and
+    # stats
     results = outliers.process_outliers(df, output_dir)
 
     # Save DataFrames to disk

@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 from notebook_data_optimization import optimize_data
 
+
 class TestDataOptimization(unittest.TestCase):
 
     def test_optimize_data(self):
@@ -19,29 +20,47 @@ class TestDataOptimization(unittest.TestCase):
         df['int_values_copy'] = df['int_values'].copy()
 
         # Apply optimization
-        df_optimized = optimize_data(df.copy()) # Use a copy to avoid modifying original df for assertions
+        # Use a copy to avoid modifying original df for assertions
+        df_optimized = optimize_data(df.copy())
 
         # Assertions
         # Check category conversion
-        self.assertEqual(df_optimized['category_low_cardinality'].dtype.name, 'category')
-        self.assertEqual(df_optimized['category_high_cardinality'].dtype.name, 'object') # Should remain object
+        self.assertEqual(
+            df_optimized['category_low_cardinality'].dtype.name,
+            'category')
+        self.assertEqual(
+            df_optimized['category_high_cardinality'].dtype.name,
+            'object')  # Should remain object
 
         # Check numeric downcasting
-        self.assertTrue(str(df_optimized['float_values'].dtype).startswith('float32')) # or float16 depending on data
-        self.assertTrue(str(df_optimized['int_values'].dtype).startswith('int')) # e.g. int8, int16, int32
+        self.assertTrue(str(df_optimized['float_values'].dtype).startswith(
+            'float32'))  # or float16 depending on data
+        # e.g. int8, int16, int32
+        self.assertTrue(
+            str(df_optimized['int_values'].dtype).startswith('int'))
 
         # Check date conversion
-        self.assertTrue(pd.api.types.is_datetime64_any_dtype(df_optimized['date_strings']))
+        self.assertTrue(
+            pd.api.types.is_datetime64_any_dtype(
+                df_optimized['date_strings']))
 
         # Check that values are not altered significantly for numeric types (simple check)
         # Compare values of float_values and float_values_copy
-        np.testing.assert_allclose(df_optimized['float_values'].to_numpy(), df_optimized['float_values_copy'].to_numpy(), rtol=1e-5)
+        np.testing.assert_allclose(
+            df_optimized['float_values'].to_numpy(),
+            df_optimized['float_values_copy'].to_numpy(),
+            rtol=1e-5)
         self.assertEqual(df_optimized['float_values'].dtype, np.float32)
         self.assertEqual(df_optimized['float_values_copy'].dtype, np.float32)
 
-        # Ensure original int values are preserved by comparing with original df values cast to the new dtype
-        pd.testing.assert_series_equal(df_optimized['int_values'], df['int_values_copy'].astype(df_optimized['int_values'].dtype), check_dtype=True, check_names=False)
-
+        # Ensure original int values are preserved by comparing with original
+        # df values cast to the new dtype
+        pd.testing.assert_series_equal(
+            df_optimized['int_values'],
+            df['int_values_copy'].astype(
+                df_optimized['int_values'].dtype),
+            check_dtype=True,
+            check_names=False)
 
     def test_optimize_data_empty_df(self):
         df = pd.DataFrame()
@@ -63,7 +82,9 @@ class TestDataOptimization(unittest.TestCase):
             'date_col_invalid': ['2023-01-01', 'not_a_date']
         })
         df_optimized = optimize_data(df.copy())
-        self.assertTrue(pd.api.types.is_datetime64_any_dtype(df_optimized['date_col_valid']))
+        self.assertTrue(
+            pd.api.types.is_datetime64_any_dtype(
+                df_optimized['date_col_valid']))
         self.assertEqual(df_optimized['date_col_invalid'].dtype.name, 'object')
 
 
