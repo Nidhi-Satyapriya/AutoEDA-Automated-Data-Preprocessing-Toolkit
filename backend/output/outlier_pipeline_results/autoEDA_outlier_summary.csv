@@ -1,0 +1,7 @@
+Column,Detection_Method,Outliers_Detected
+PassengerId,Z-score,0
+Pclass,IQR,0
+Age,IQR,55
+SibSp,IQR,104
+Parch,Z-score,0
+Fare,IQR,69

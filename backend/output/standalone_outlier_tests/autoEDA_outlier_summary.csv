@@ -1,0 +1,5 @@
+Column,Detection_Method,Outliers_Detected
+Numeric1,IQR,5
+Numeric2,Z-score,0
+Numeric3_skewed,IQR,10
+Numeric4_with_nan,Z-score,1

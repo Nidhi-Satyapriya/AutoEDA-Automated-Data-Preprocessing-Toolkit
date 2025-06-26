@@ -27,18 +27,14 @@ def run_outlier_pipeline(scaled_csv_path, output_dir):
             - 'flagged_csv': Path to flagged dataset
             - 'capped_csv': Path to capped dataset
             - 'removed_csv': Path to dataset with outliers removed
-            - 'summary_report': Path to outlier summary report (JSON/Markdown)
+            - 'summary_report_json': Path to outlier summary report (JSON)
+            - 'summary_report_csv': Path to summary report in CSV format
             - 'outlier_stats': Outlier statistics/metadata (dict)
 
     Raises
     ------
     FileNotFoundError: If the input file does not exist.
     ValueError: If the input file is malformed or cannot be loaded.
-
-    Example
-    -------
-    >>> result = run_outlier_pipeline('output-files/autoEDA_scaled_output.csv', 'output-files/outlier_results')
-    >>> print(result['flagged_csv'])
     """
     if not os.path.isfile(scaled_csv_path):
         raise FileNotFoundError(f"Input file not found: {scaled_csv_path}")
@@ -50,32 +46,128 @@ def run_outlier_pipeline(scaled_csv_path, output_dir):
     except Exception as e:
         raise ValueError(f"Failed to load input CSV: {e}")
 
-    # Call the main orchestration function from outliers.py
-    # Assumes outliers.process_outliers returns a dict with DataFrames and
-    # stats
-    results = outliers.process_outliers(df, output_dir)
-
-    # Save DataFrames to disk
-    flagged_csv = os.path.join(output_dir, 'flagged_outliers.csv')
-    capped_csv = os.path.join(output_dir, 'capped_outliers.csv')
-    removed_csv = os.path.join(output_dir, 'removed_outliers.csv')
-    results['flagged'].to_csv(flagged_csv, index=False)
-    results['capped'].to_csv(capped_csv, index=False)
-    results['removed'].to_csv(removed_csv, index=False)
-
-    # Save summary report
-    summary_report = os.path.join(output_dir, 'outlier_summary.json')
-    if 'summary' in results:
-        import json
-        with open(summary_report, 'w') as f:
-            json.dump(results['summary'], f, indent=2)
-    else:
-        summary_report = None
+    # Refactored version: file saving and summary is handled by process_outliers
+    outlier_processing_results = outliers.process_outliers(df, output_dir)
 
     return {
-        'flagged_csv': flagged_csv,
-        'capped_csv': capped_csv,
-        'removed_csv': removed_csv,
-        'summary_report': summary_report,
-        'outlier_stats': results.get('summary', {})
+        'flagged_csv': outlier_processing_results['paths']['flagged_csv'],
+        'capped_csv': outlier_processing_results['paths']['capped_csv'],
+        'removed_csv': outlier_processing_results['paths']['removed_csv'],
+        'summary_report_json': outlier_processing_results['paths']['report_json'],
+        'summary_report_csv': outlier_processing_results['paths']['summary_csv'],
+        'outlier_stats': outlier_processing_results.get('summary', {})
     }
+
+
+def run_pca_pipeline(input_csv_path, output_dir, n_components=None):
+    """
+    Run the PCA transformation pipeline.
+
+    Parameters
+    ----------
+    input_csv_path : str
+        Path to the input CSV file.
+    output_dir : str
+        Directory to store all output files.
+    n_components : int, optional
+        Number of principal components to keep. If None, all components are retained.
+
+    Returns
+    -------
+    dict
+        Dictionary containing:
+            - 'pca_transformed_csv': Path to the transformed dataset.
+            - 'pca_summary': Path to the PCA summary report (JSON).
+            - 'pca_log_file': Path to log file.
+
+    Raises
+    ------
+    FileNotFoundError: If the input file does not exist.
+    ValueError: If the input file is malformed or cannot be loaded.
+    """
+    if not os.path.isfile(input_csv_path):
+        raise FileNotFoundError(f"Input file not found: {input_csv_path}")
+
+    os.makedirs(output_dir, exist_ok=True)
+
+    try:
+        df = pd.read_csv(input_csv_path)
+    except Exception as e:
+        raise ValueError(f"Failed to load input CSV: {e}")
+
+    from autoeda.pca_transformer import apply_pca
+    import json
+    import logging
+
+    log_file_path = os.path.join(output_dir, 'pca_pipeline.log')
+
+    # Clear previous log handlers (if any)
+    for handler in logging.root.handlers[:]:
+        logging.root.removeHandler(handler)
+
+    try:
+        logging.basicConfig(
+            level=logging.INFO,
+            format='%(asctime)s - %(levelname)s - %(module)s - %(message)s',
+            filename=log_file_path,
+            filemode='a',
+            force=True
+        )
+    except TypeError:
+        logging.basicConfig(
+            level=logging.INFO,
+            format='%(asctime)s - %(levelname)s - %(module)s - %(message)s',
+            filename=log_file_path,
+            filemode='a'
+        )
+
+    logging.info(f"Starting PCA transformation for {input_csv_path}...")
+
+    transformed_df, metadata = apply_pca(df, n_components=n_components)
+
+    pca_transformed_csv = os.path.join(output_dir, 'pca_transformed.csv')
+    transformed_df.to_csv(pca_transformed_csv, index=False)
+    logging.info(f"Transformed data saved to: {pca_transformed_csv}")
+
+    pca_summary_path = os.path.join(output_dir, 'pca_summary.json')
+    with open(pca_summary_path, 'w') as f:
+        json.dump(metadata, f, indent=2)
+    logging.info(f"PCA summary saved to: {pca_summary_path}")
+
+    logging.info("PCA transformation completed.")
+
+    return {
+        'pca_transformed_csv': pca_transformed_csv,
+        'pca_summary': pca_summary_path,
+        'pca_log_file': log_file_path
+    }
+
+
+if __name__ == "__main__":
+    # Example usage of the outlier pipeline
+    sample_scaled_csv = 'backend/output/autoEDA_outliers_removed.csv'
+    outlier_output_directory = 'backend/output/outlier_pipeline_results'
+
+    if not os.path.exists(sample_scaled_csv):
+        os.makedirs(os.path.dirname(sample_scaled_csv), exist_ok=True)
+        dummy_df = pd.DataFrame({'A': [1, 2, 3, 100], 'B': [4, 5, 6, 200], 'C': [7, 8, 9, 300]})
+        dummy_df.to_csv(sample_scaled_csv, index=False)
+        print(f"Created dummy input file: {sample_scaled_csv}")
+
+    print(f"Running outlier pipeline with input: {sample_scaled_csv} and output dir: {outlier_output_directory}")
+    outlier_results = run_outlier_pipeline(sample_scaled_csv, outlier_output_directory)
+    print("Outlier pipeline completed. Results:")
+    for key, value in outlier_results.items():
+        print(f"  {key}: {value}")
+
+    print("\n" + "="*50 + "\n")
+
+    # Example usage of the PCA pipeline
+    input_for_pca = outlier_results.get('removed_csv', sample_scaled_csv)
+    pca_output_directory = 'backend/output/pca_pipeline_results'
+
+    print(f"Running PCA pipeline with input: {input_for_pca} and output dir: {pca_output_directory}")
+    pca_results = run_pca_pipeline(input_for_pca, pca_output_directory, n_components=2)
+    print("PCA pipeline completed. Results:")
+    for key, value in pca_results.items():
+        print(f"  {key}: {value}")

@@ -1,0 +1,19 @@
+{
+  "explained_variance_ratio": [
+    0.5093577687521174,
+    0.3604710089961429
+  ],
+  "n_components": 2,
+  "original_columns": [
+    "PassengerId",
+    "Pclass",
+    "Age",
+    "SibSp",
+    "Parch",
+    "Fare"
+  ],
+  "pca_columns": [
+    "PC1",
+    "PC2"
+  ]
+}

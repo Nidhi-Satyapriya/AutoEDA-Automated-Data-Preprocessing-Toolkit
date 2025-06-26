@@ -1,0 +1,20 @@
+{
+  "detection_methods": {
+    "Numeric1": "IQR",
+    "Numeric2": "Z-score",
+    "Numeric3_skewed": "IQR",
+    "Numeric4_with_nan": "Z-score"
+  },
+  "outliers_detected_count": {
+    "Numeric1": 5,
+    "Numeric2": 0,
+    "Numeric3_skewed": 10,
+    "Numeric4_with_nan": 1
+  },
+  "total_rows_with_outliers": 12,
+  "output_files": {
+    "flagged": "autoEDA_outliers_flagged.csv",
+    "capped": "autoEDA_outliers_capped.csv",
+    "removed": "autoEDA_outliers_removed.csv"
+  }
+}

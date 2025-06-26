@@ -1,0 +1,24 @@
+{
+  "detection_methods": {
+    "PassengerId": "Z-score",
+    "Pclass": "IQR",
+    "Age": "IQR",
+    "SibSp": "IQR",
+    "Parch": "Z-score",
+    "Fare": "IQR"
+  },
+  "outliers_detected_count": {
+    "PassengerId": 0,
+    "Pclass": 0,
+    "Age": 55,
+    "SibSp": 104,
+    "Parch": 0,
+    "Fare": 69
+  },
+  "total_rows_with_outliers": 188,
+  "output_files": {
+    "flagged": "autoEDA_outliers_flagged.csv",
+    "capped": "autoEDA_outliers_capped.csv",
+    "removed": "autoEDA_outliers_removed.csv"
+  }
+}

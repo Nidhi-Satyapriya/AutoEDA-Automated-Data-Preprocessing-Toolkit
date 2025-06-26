@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Mail, ArrowUp, ExternalLink } from 'lucide-react';
 import { SiGithub } from 'react-icons/si';
 import { Linkedin } from 'lucide-react';
+import { Link } from "react-router-dom";  // ✅ Added for internal routing
 import loggd from './Autd.svg';
 import rockt from './itop.svg';
 
@@ -34,34 +35,20 @@ const Footer = () => {
                 {/* Main Footer Content */}
                 <div className="py-16">
                     <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
-                        {/* Brand Section - Takes 5 columns */}
+                        {/* Brand Section */}
                         <div className="lg:col-span-5">
-                            {/* Logo and Brand */}
                             <div className="flex items-center space-x-4 mb-8">
-                                {/* <div className="relative">
-                                    Logo container
-                                    <div className="w-16 h-16 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center shadow-lg shadow-purple-500/25 overflow-hidden">
-                                        <span className="text-white text-2xl font-bold">A</span>
-                                    </div>
-                                </div> */}
-
-                                {/* Text content */}
                                 <div>
-                                    {/* Logo (light & dark mode switching) */}
                                     <div className="mb-1">
                                         <img src={loggd} alt="AutoEDA Logo" className="h-10 w-auto block dark:hidden" />
                                         <img src={loggd} alt="AutoEDA Logo" className="h-10 w-auto hidden dark:block" />
                                     </div>
-
-                                    {/* Subtitle remains the same */}
                                     <p className="text-slate-300 font-medium tracking-wide">
                                         Automated Exploratory Data Analysis
                                     </p>
                                 </div>
-
                             </div>
 
-                            {/* Description */}
                             <p className="text-slate-300 text-lg leading-relaxed mb-8 max-w-lg">
                                 <span className="font-semibold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">Instant insights, zero hassle.</span>
                                 <br />
@@ -69,7 +56,7 @@ const Footer = () => {
                             </p>
                         </div>
 
-                        {/* Links Section - Takes 7 columns (divided into 4 parts) */}
+                        {/* Links Section */}
                         <div className="lg:col-span-7">
                             <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
                                 {/* Company Section */}
@@ -89,7 +76,6 @@ const Footer = () => {
                                                 Our Team
                                             </a>
                                         </li>
-
                                         <li>
                                             <a href="#" className="text-slate-300 hover:text-blue-300 transition-colors duration-300 font-medium">
                                                 Events
@@ -106,9 +92,9 @@ const Footer = () => {
                                     </h4>
                                     <ul className="space-y-3">
                                         <li>
-                                            <a href="#" className="text-slate-300 hover:text-blue-300 transition-colors duration-300 font-medium">
+                                            <Link to="/contact" className="text-slate-300 hover:text-blue-300 transition-colors duration-300 font-medium">
                                                 Contact Us
-                                            </a>
+                                            </Link>
                                         </li>
                                         <li>
                                             <a href="#" className="text-slate-300 hover:text-blue-300 transition-colors duration-300 font-medium">
@@ -155,7 +141,6 @@ const Footer = () => {
                                         <div className="absolute -bottom-2 left-0 w-12 h-1 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full"></div>
                                     </h4>
                                     <div className="space-y-4">
-
                                         <div className="flex items-start space-x-4 text-slate-300 hover:text-blue-300 transition-colors duration-300">
                                             <Mail className="w-5 h-5 text-blue-300 mt-1 flex-shrink-0" />
                                             <a href="mailto:satyapriyanidhi@gmail.com" className="font-medium hover:underline">
@@ -168,7 +153,6 @@ const Footer = () => {
                                                 GitHub
                                             </a>
                                         </div>
-                                        {/* LinkedIn */}
                                         <div className="flex items-start space-x-4 text-slate-300 hover:text-blue-300 transition-colors duration-300">
                                             <Linkedin className="w-5 h-5 text-blue-300 mt-1 flex-shrink-0" />
                                             <a href="https://www.linkedin.com/in/nidhi-satyapriya-960556249/" className="font-medium hover:underline">
@@ -209,16 +193,14 @@ const Footer = () => {
                 <button
                     onClick={scrollToTop}
                     className="fixed bottom-8 right-8 p-4 hover:shadow-purple-500/50 hover:scale-110 transition-all duration-300 z-50 group"
-                    >
+                >
                     <img
                         src={rockt}
                         alt="Scroll to top"
                         className="w-12 h-12 group-hover:scale-110 transition-transform duration-300"
                     />
                 </button>
-
             )}
-
         </footer>
     );
 };
